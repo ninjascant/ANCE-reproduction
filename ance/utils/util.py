@@ -1,31 +1,19 @@
-import sys
-sys.path += ['../']
-import pandas as pd
-from sklearn.metrics import roc_curve, auc
 import gzip
 import copy
-import torch
-from torch import nn
 import torch.distributed as dist
-from tqdm import tqdm, trange
 import os
-from os import listdir
-from os.path import isfile, join
 import json
 import logging
 import random
-import pytrec_eval
 import pickle
 import numpy as np
 import torch
-torch.multiprocessing.set_sharing_strategy('file_system')
 from multiprocessing import Process
 from torch.utils.data import DataLoader, Dataset, TensorDataset, IterableDataset
 import re
-from model.models import MSMarcoConfigDict, ALL_MODELS
-from typing import List, Set, Dict, Tuple, Callable, Iterable, Any
+from ..model.models import MSMarcoConfigDict
 
-
+torch.multiprocessing.set_sharing_strategy('file_system')
 logger = logging.getLogger(__name__)
 
 
@@ -311,9 +299,9 @@ class StreamingDataset(IterableDataset):
         super().__init__()
         self.elements = elements
         self.fn = fn
-        self.num_replicas=-1 
+        self.num_replicas=-1
         self.distributed = distributed
-    
+
     def __iter__(self):
         if dist.is_initialized():
             self.num_replicas = dist.get_world_size()

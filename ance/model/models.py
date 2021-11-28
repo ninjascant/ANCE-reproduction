@@ -1,5 +1,4 @@
 import sys
-sys.path += ['../']
 import torch
 from torch import nn
 from transformers import (
@@ -12,8 +11,8 @@ from transformers import (
     BertConfig
 )
 import torch.nn.functional as F
-from data.process_fn import triple_process_fn, triple2dual_process_fn
-from model.SEED_Encoder import SEEDEncoderConfig, SEEDTokenizer, SEEDEncoderForSequenceClassification,SEEDEncoderForMaskedLM
+from ..data.process_fn import triple_process_fn, triple2dual_process_fn
+from SEED_Encoder import SEEDEncoderConfig, SEEDTokenizer, SEEDEncoderForSequenceClassification,SEEDEncoderForMaskedLM
 
 
 class EmbeddingMixin:

@@ -1,16 +1,14 @@
 import sys
 import os
 import torch
-sys.path += ['../']
 import gzip
+from .process_fn import triple_process_fn
 import pickle
-from utils.util import pad_input_ids, multi_file_process, numbered_byte_file_generator, EmbeddingCache
+from ..utils.util import pad_input_ids, multi_file_process, numbered_byte_file_generator, EmbeddingCache
 import csv
-from model.models import MSMarcoConfigDict, ALL_MODELS
+from ..model.models import MSMarcoConfigDict, ALL_MODELS
 from torch.utils.data import DataLoader, Dataset, TensorDataset, IterableDataset, get_worker_info
 import numpy as np
-from os import listdir
-from os.path import isfile, join
 import argparse
 import json
 
@@ -428,13 +426,9 @@ def get_arguments():
     return args
 
 
-def main():
+def run_preprocess():
     args = get_arguments()
 
     if not os.path.exists(args.out_data_dir):
         os.makedirs(args.out_data_dir)
     preprocess(args)
-
-
-if __name__ == '__main__':
-    main()
