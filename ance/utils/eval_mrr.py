@@ -1,16 +1,13 @@
-import sys
-sys.path += ["../"]
-from utils.msmarco_eval import quality_checks_qids, compute_metrics, load_reference
-import torch.distributed as dist
-import gzip
+import os
 import faiss
 import numpy as np
-from data.process_fn import dual_process_fn
 from tqdm import tqdm
 import torch
-import os
-from utils.util import concat_key, is_first_worker, all_gather, StreamingDataset
+import torch.distributed as dist
 from torch.utils.data import DataLoader
+from ..utils.util import concat_key, is_first_worker, all_gather, StreamingDataset
+from ..data.process_fn import dual_process_fn
+from ..utils.msmarco_eval import quality_checks_qids, compute_metrics, load_reference
 
 
 def embedding_inference(args, path, model, fn, bz, num_workers=2, is_query=True):
