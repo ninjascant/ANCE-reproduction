@@ -147,7 +147,8 @@ class RobertaDot_NLL_LN(NLL, RobertaForSequenceClassification):
 
     def query_emb(self, input_ids, attention_mask):
         outputs1 = self.roberta(input_ids=input_ids,
-                                attention_mask=attention_mask)
+                                attention_mask=attention_mask,
+                                return_dict=False)
         full_emb = self.masked_mean_or_first(outputs1, attention_mask)
         query1 = self.norm(self.embeddingHead(full_emb))
         return query1
@@ -247,7 +248,7 @@ class BiEncoder(nn.Module):
         lsm = F.log_softmax(logit_matrix, dim=1)
         loss = -1.0*lsm[:,0]
         return (loss.mean(),)
-        
+
 
 # --------------------------------------------------
 ALL_MODELS = sum(
